@@ -1,5 +1,5 @@
-name: template_nextflow_workflow
-displayname: STUFF
+name: ENVnet_Workflow
+displayname: Compare Data Using ENVnet
 Views:
 -   name: Summary List
     displayname: Summary List
