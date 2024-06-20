@@ -11,7 +11,7 @@ params.inputfiles2_name = "supern-WAVE-NatCom-NLDM-Day7"
 params.exp_name = "wavestab1"
 
 params.publishdir = "$baseDir"
-TOOL_FOLDER = "$baseDir/bin/carbon_network/carbon_network/use"
+TOOL_FOLDER = "$baseDir/bin/envnet/envnet/use"
 
 process analyzeDataWithNetwork {
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
