@@ -10,12 +10,46 @@ parameterlist:
     - displayname: File Selection
       paramtype: section
 
-    - displayname: Input Data Folder
+    - displayname: Group 1 (Control) Data Folder
       paramtype: fileselector
-      nf_paramname: input_spectra
+      nf_paramname: inputfiles1
       formplaceholder: Enter the path to data
       formvalue: ""
-      targettaskfolder: input_spectra
+      targettaskfolder: inputfiles1
       optional: false
       selectsinglefile: false
       folderunroll: true
+
+    - displayname: Group 2 (Treatment) Data Folder
+      paramtype: fileselector
+      nf_paramname: inputfiles2
+      formplaceholder: Enter the path to data
+      formvalue: ""
+      targettaskfolder: inputfiles2
+      optional: false
+      selectsinglefile: false
+      folderunroll: true
+
+    - displayname: Analysis Parameters
+      paramtype: section
+
+    - displayname: Experiment Name
+      paramtype: text
+      nf_paramname: exp_name
+      formplaceholder: Enter name of experiment.
+      formvalue: ""
+      optional: false
+
+    - displayname: Group 1 (Control) Data Folder
+      paramtype: text
+      nf_paramname: inputfiles1_name
+      formplaceholder: Enter data group 1 name.
+      formvalue: ""
+      optional: false
+
+    - displayname: Group 2 (Treatment) Data Folder
+      paramtype: text
+      nf_paramname: inputfiles2_name
+      formplaceholder: Enter data group 2 name.
+      formvalue: ""
+      optional: false

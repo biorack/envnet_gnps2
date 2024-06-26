@@ -1,19 +1,36 @@
 name: ENVnet_Workflow
 displayname: Compare Data Using ENVnet
 Views:
--   name: Summary List
-    displayname: Summary List
-    viewname: summarylist
-    displaytype: datatable
+-   name: Download Output Files
+    displayname: Download Output Files
+    viewname: OutputFiles
+    displaytype: section
+
+-   name: Download Output Table
+    displayname: Download Output Table
+    viewname: OutputTable
+    displaytype: download
     parameters:
-        filename: output/summary.tsv
-        columns:
-            -   title: "View LCMS"
-                data: filename
-            -   title: "filename"
-                data: filename
-        columnDefs: '[ {"targets": 0,"data": null,"render": function ( data, type, row, meta ) {
-            return `
-            <a target="_blank" href="/dashboards/lcms?usi=mzspec:GNPS2-${task}:${encodeURIComponent(row["filename"])}">View LCMS - mzspec:GNPS2-${task}:${row["filename"]}</a>
-            `;}}]'
+        filename: nf_output/results/OUTPUT*.csv
+
+-   name: Download Annotated ENVnet GraphML
+    displayname: Download Network GraphML
+    viewname: graphml
+    displaytype: download
+    parameters:
+        filename: nf_output/results/AnnotatedCarbonNetwork.graphml
+
+-   name: Download MS1 Data
+    displayname: Download MS1 Data
+    viewname: MS1Data
+    displaytype: download
+    parameters:
+        filename: nf_output/results/all_ms1_data.csv
+
+-   name: Download MS2 Data
+    displayname: Download MS2 Data
+    viewname: MS2Data
+    displaytype: download
+    parameters:
+        filename: nf_output/results/all_ms2_data.csv
             
