@@ -1,6 +1,22 @@
 name: ENVnet_Workflow
 displayname: Compare Data Using ENVnet
 Views:
+
+-   name: Visualize Network
+    displayname: Visualize Network
+    viewname: VisualizeNetwork
+    displaytype: section
+
+-   name: Visualize Network in Cosmograph
+    displayname: Visualize Full Network in Cosmograph
+    viewname: visualizefullnetwork
+    displaytype: linkout
+    parameters:
+        baseurl: https://cosmograph.app/run/
+        urlparam:
+            -   data:http://ucr-lemon.duckdns.org:4000/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
+            -   meta:http://ucr-lemon.duckdns.org:4000/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
+
 -   name: Download Output Files
     displayname: Download Output Files
     viewname: OutputFiles
@@ -11,7 +27,7 @@ Views:
     viewname: OutputTable
     displaytype: download
     parameters:
-        filename: nf_output/results/OUTPUT*.csv
+        filename: nf_output/results/output_group1-vs-group2.csv
 
 -   name: Download Annotated ENVnet GraphML
     displayname: Download Network GraphML
