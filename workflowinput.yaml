@@ -4,7 +4,7 @@ workflowlongdescription: Compare Data Using ENVnet
 workflowversion: "0.1"
 workflowfile: nf_workflow.nf
 workflowautohide: false
-adminonly: false
+adminonly: true
 #This maps the parameters from an input form to those that will appear in nextflow
 parameterlist:
     - displayname: File Selection
