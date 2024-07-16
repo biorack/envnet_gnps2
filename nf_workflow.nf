@@ -24,7 +24,7 @@ process analyzeDataWithNetwork {
     path "all_ms1_data.csv"
     path "all_ms2_data.csv"
     path "output_group1-vs-group2.csv", emit: output_file
-    path "AnnotatedCarbonNetwork.graphml", emit: graph_file
+    path "AnnotatedENVnet.graphml", emit: graph_file
 
     """
     python $TOOL_FOLDER/analyze_metatlas_data_cli.py \

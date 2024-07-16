@@ -34,7 +34,7 @@ Views:
     viewname: graphml
     displaytype: download
     parameters:
-        filename: nf_output/results/AnnotatedCarbonNetwork.graphml
+        filename: nf_output/results/AnnotatedENVnet.graphml
 
 -   name: Download MS1 Data
     displayname: Download MS1 Data
