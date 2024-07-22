@@ -16,6 +16,7 @@ Views:
         urlparam:
             -   data:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
             -   meta:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
+            -   nodeColor:color-log2_foldchange_color
 
 -   name: Download Output Files
     displayname: Download Output Files

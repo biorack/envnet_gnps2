@@ -30,7 +30,7 @@ parameterlist:
       selectsinglefile: false
       folderunroll: true
 
-    - displayname: Analysis Parameters
+    - displayname: General Parameters
       paramtype: section
 
     - displayname: Group 1 (Control) Name
@@ -46,3 +46,83 @@ parameterlist:
       formplaceholder: Enter data group 2 name.
       formvalue: ""
       optional: false
+
+    - displayname: Analysis Parameters
+      paramtype: section
+
+    - displayname: m/z Tolerance (ppm)
+      paramtype: text
+      nf_paramname: mz_tolerance
+      formplaceholder: Enter the mz_tolerance. Used for MS1 and precursor m/z comparisons
+      formvalue: "5"
+      optional: true
+
+    - displayname: Minimum Retention Time (Minutes)
+      paramtype: text
+      nf_paramname: rt_min
+      formplaceholder: Enter the rt_min. Used to filter features from data files outside of range
+      formvalue: "1"
+      optional: true
+
+    - displayname: Maximum Retention Time (Minutes)
+      paramtype: text
+      nf_paramname: rt_max
+      formplaceholder: Enter the rt_max. Used to filter features from data files outside of range
+      formvalue: "7"
+      optional: true
+
+    - displayname: Minimum Peak Intensity (Height)
+      paramtype: text
+      nf_paramname: pk_height_min
+      formplaceholder: Enter the pk_height_min. Used to filter features from data files lower than min
+      formvalue: "10000"
+      optional: true
+
+    - displayname: Minimum Number of Data Points
+      paramtype: text
+      nf_paramname: num_data_min
+      formplaceholder: Enter the num_data_min. Used to filter features from data files lower than min. A data point is defined as the detection of a particular m/z in one scan. 
+      formvalue: "10"
+      optional: true
+
+    - displayname: Fragment m/z Tolerance (Dalton)
+      paramtype: text
+      nf_paramname: frag_mz_tol
+      formplaceholder: Enter the frag_mz_tol. Used for MS2 fragment m/z comparisons
+      formvalue: "0.05"
+      optional: true
+
+    - displayname: Minimum MS/MS Score
+      paramtype: text
+      nf_paramname: msms_score_min
+      formplaceholder: Enter the msms_score_min.
+      formvalue: "0.5"
+      optional: true
+
+    - displayname: Minimum MS/MS Matching Ion Counts 
+      paramtype: text
+      nf_paramname: msms_matches_min
+      formplaceholder: Enter the msms_matches_min.
+      formvalue: "3"
+      optional: true
+
+    - displayname: Cosmograph Visualization Parameters
+      paramtype: section
+
+    - displayname: Max Log Fold Change
+      paramtype: text
+      nf_paramname: max_log_change
+      formplaceholder: Enter the max_log_change. Used for visualization in cosmograph, doesn't override actual values.
+      formvalue: "2"
+      optional: true
+
+    - displayname: Compound Class & Set Cover Analysis Parameters
+      paramtype: section
+
+    - displayname: Max P value
+      paramtype: text
+      nf_paramname: max_pval
+      formplaceholder: Enter the max_pval. Used for the compound class comparisons
+      formvalue: "0.05"
+      optional: true
+
