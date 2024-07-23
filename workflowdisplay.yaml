@@ -37,6 +37,20 @@ Views:
     parameters:
         filename: nf_output/results/AnnotatedENVnet.graphml
 
+-   name: Download Compound Class Plots
+    displayname: Download Compound Class Plots
+    viewname: CompoundClass
+    displaytype: download
+    parameters:
+        filename: nf_output/compound_class_plots/class_results.pdf
+
+-   name: Download Set Cover Plots
+    displayname: Download Set Cover Plots
+    viewname: SetCover
+    displaytype: download
+    parameters:
+        filename: nf_output/set_cover_plots/set_cover_results.pdf
+
 -   name: Download MS1 Data
     displayname: Download MS1 Data
     viewname: MS1Data
