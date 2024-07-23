@@ -19,7 +19,7 @@ params.msms_score_min = 0.5
 params.msms_matches_min = 3
 
 // Cosmograph Parameters
-params.max_log_change = 2
+params.max_log_change = 1
 
 // Pathway and Set Cover Parameters
 params.max_pval = 0.05
@@ -117,7 +117,7 @@ workflow {
 
     collectNetworkHits(mzml_files1, mzml_files2)
     
-    formatCosmographOutput(collectNetworkHits.out.graph_file, 
+    formatCosmographOutput(collectNetworkHits.out.graph_file,
                            collectNetworkHits.out.output_file)
 
     generateCompoundClassOutputs(collectNetworkHits.out.all_ms1_data, 

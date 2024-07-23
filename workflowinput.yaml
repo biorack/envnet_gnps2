@@ -109,11 +109,11 @@ parameterlist:
     - displayname: Cosmograph Visualization Parameters
       paramtype: section
 
-    - displayname: Max Log Fold Change
+    - displayname: Max Log2 Fold Change
       paramtype: text
       nf_paramname: max_log_change
       formplaceholder: Enter the max_log_change. Used for visualization in cosmograph, doesn't override actual values.
-      formvalue: "2"
+      formvalue: "1"
       optional: true
 
     - displayname: Compound Class & Set Cover Analysis Parameters
@@ -125,4 +125,3 @@ parameterlist:
       formplaceholder: Enter the max_pval. Used for the compound class comparisons
       formvalue: "0.05"
       optional: true
-
