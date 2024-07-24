@@ -109,7 +109,7 @@ parameterlist:
     - displayname: Cosmograph Visualization Parameters
       paramtype: section
 
-    - displayname: Max Log2 Fold Change
+    - displayname: Log2 Fold Change Color Scale Max
       paramtype: text
       nf_paramname: max_log_change
       formplaceholder: Enter the max_log_change. Used for visualization in cosmograph, doesn't override actual values.

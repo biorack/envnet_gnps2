@@ -23,7 +23,7 @@ Views:
     viewname: OutputFiles
     displaytype: section
 
--   name: Download Output Table
+-   name: Download ENVnet Analysis Output Table
     displayname: Download Output Table
     viewname: OutputTable
     displaytype: download
