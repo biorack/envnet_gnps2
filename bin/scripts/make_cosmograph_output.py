@@ -74,19 +74,13 @@ metadata_cols = ['id',
  'ms2_matches',
  'ms2_best_match_method',
  'ms2_lcmsrun_observed',
- 'mean-supern-WAVE-NatCom-NLDM-Day0',
- 'mean-supern-WAVE-NatCom-NLDM-Day7',
- 'median-supern-WAVE-NatCom-NLDM-Day0',
- 'median-supern-WAVE-NatCom-NLDM-Day7',
- 'standard_error-supern-WAVE-NatCom-NLDM-Day0',
- 'standard_error-supern-WAVE-NatCom-NLDM-Day7',
- 'std_dev-supern-WAVE-NatCom-NLDM-Day0',
- 'std_dev-supern-WAVE-NatCom-NLDM-Day7',
  'p_value',
  't_score',
  'log2_foldchange',
  'log2_foldchange_color',
  'pathway_propagated_colors']
+
+stats_prefixes = ['mean', 'median', 'standard_error', 'std_dev']
 
 
 def generate_cosmograph_data(graph_file_path, output_file_path, min_log2=-4, max_log=4, log_cmap='coolwarm', pathway_cmap='hsv'):
@@ -114,8 +108,10 @@ def generate_cosmograph_data(graph_file_path, output_file_path, min_log2=-4, max
 
     metadata['pathway_propagated_colors'] = metadata['pathway_results_propagated'].map(color_map)
 
+    stats_cols = [col for col in metadata.columns if col.split('-')[0] in stats_prefixes]
+
     edges_df.to_csv('cosmograph_edges.csv')
-    metadata[metadata_cols].to_csv('cosmograph_metadata.csv')
+    metadata[metadata_cols + stats_cols].to_csv('cosmograph_metadata.csv')
 
 
 def arg_parser(parser=None):

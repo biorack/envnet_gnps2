@@ -2,11 +2,11 @@
 nextflow.enable.dsl=2
 
 // Parameters
-params.inputfiles1 = "/home/tharwood/repos/test_data/files1/"
-params.inputfiles2 = "/home/tharwood/repos/test_data/files2/"
+params.inputfiles1 = "/mnt/c/omt_cmt_soils/cmt/"
+params.inputfiles2 = "/mnt/c/omt_cmt_soils/omt/"
 
-params.inputfiles1_name = "supern-WAVE-NatCom-NLDM-Day0"
-params.inputfiles2_name = "supern-WAVE-NatCom-NLDM-Day7"
+params.inputfiles1_name = "CMT"
+params.inputfiles2_name = "OMT"
 
 // Analysis Parameters
 params.mz_tolerance = 5
