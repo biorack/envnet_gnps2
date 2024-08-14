@@ -47,6 +47,16 @@ parameterlist:
       formvalue: ""
       optional: false
 
+    - displayname: Normalize Intensities
+      paramtype: select
+      nf_paramname: normalize_ints
+      formvalue: "0"
+      options:
+        - value: "0"
+          display: "No"
+        - value: "1"
+          display: "Yes"
+
     - displayname: Analysis Parameters
       paramtype: section
 

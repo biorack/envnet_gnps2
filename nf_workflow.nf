@@ -2,18 +2,20 @@
 nextflow.enable.dsl=2
 
 // Parameters
-params.inputfiles1 = "/mnt/c/omt_cmt_soils/cmt/"
-params.inputfiles2 = "/mnt/c/omt_cmt_soils/omt/"
+params.inputfiles1 = "/mnt/c/permafrost/20M/"
+params.inputfiles2 = "/mnt/c/permafrost/55M/"
 
-params.inputfiles1_name = "CMT"
-params.inputfiles2_name = "OMT"
+params.inputfiles1_name = "20M"
+params.inputfiles2_name = "55M"
+
+params.normalize_ints = 1
 
 // Analysis Parameters
-params.mz_tolerance = 5
+params.mz_tolerance = 10
 params.rt_min = 1
 params.rt_max = 7
 params.pk_height_min = 1e4
-params.num_data_min = 10
+params.num_data_min = 5
 params.frag_mz_tol = 0.05
 params.msms_score_min = 0.5
 params.msms_matches_min = 3
@@ -57,6 +59,7 @@ process collectNetworkHits {
     --frag_mz_tol $params.frag_mz_tol \
     --msms_score_min $params.msms_score_min \
     --msms_matches_min $params.msms_matches_min \
+    --normalize_intensities $params.normalize_ints \
     """
 }
 

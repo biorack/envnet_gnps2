@@ -5,25 +5,7 @@ import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../envnet/envnet/use')))
-from analysis_tools import make_set_coverage_results, make_compound_class_analysis
-
-def generate_set_cover_figs(ms1_data_path, ms2_data_path, plot_output_dir='.'):
-    ms1_data = pd.read_csv(ms1_data_path)
-    ms2_data = pd.read_csv(ms2_data_path)
-
-    with PdfPages(os.path.join(plot_output_dir, 'set_cover_results.pdf')) as pdf:
-        make_set_coverage_results(ms1_data, 'ms1', plot_output_dir=plot_output_dir, pdf=pdf)
-        make_set_coverage_results(ms2_data, 'ms2', plot_output_dir=plot_output_dir, pdf=pdf)
-
-
-def generate_compound_class_figs(output_file_path, files_group1_name, files_group2_name, max_pval, plot_output_dir='.'):
-    output_data = pd.read_csv(output_file_path)
-
-    with PdfPages(os.path.join(plot_output_dir, 'class_results.pdf')) as pdf:
-        for c in ['class_results', 'superclass_results', 'pathway_results']:
-            for p in ['_propagated', '']:
-                make_compound_class_analysis(output_data, files_group1_name, files_group2_name, 
-                                            class_column=c+p, max_pvalue=max_pval, plot_output_dir=plot_output_dir, pdf=pdf)
+from analysis_tools import generate_set_cover_figs, generate_compound_class_figs
 
 
 def arg_parser(parser=None):
