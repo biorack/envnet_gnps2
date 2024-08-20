@@ -14,9 +14,10 @@ Views:
     parameters:
         baseurl: https://cosmograph.app/run/
         urlparam:
-            -   data:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
+            -   data:https://raw.githubusercontent.com/tharwood3/misc/main/edge_data.csv
             -   meta:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
             -   nodeColor:color-log2_foldchange_color
+            -   linkSpring:0.1
 
 -   name: Download Output Files
     displayname: Download Output Files
