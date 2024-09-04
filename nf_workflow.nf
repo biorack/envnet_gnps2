@@ -9,6 +9,7 @@ params.inputfiles1_name = "20M"
 params.inputfiles2_name = "55M"
 
 params.normalize_ints = 1
+params.peak_value = 'peak_height'
 
 // Analysis Parameters
 params.mz_tolerance = 10
@@ -60,6 +61,7 @@ process collectNetworkHits {
     --msms_score_min $params.msms_score_min \
     --msms_matches_min $params.msms_matches_min \
     --normalize_intensities $params.normalize_ints \
+    --peak_value $params.peak_value \
     """
 }
 

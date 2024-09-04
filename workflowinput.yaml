@@ -57,6 +57,16 @@ parameterlist:
         - value: "1"
           display: "Yes"
 
+    - displayname: Peak Intensity Value
+      paramtype: select
+      nf_paramname: peak_value
+      formvalue: "peak_area"
+      options:
+        - value: "peak_area"
+          display: "Peak Area"
+        - value: "peak_height"
+          display: "Peak Height"
+
     - displayname: Analysis Parameters
       paramtype: section
 
