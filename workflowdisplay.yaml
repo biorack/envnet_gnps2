@@ -7,7 +7,7 @@ Views:
     viewname: VisualizeNetwork
     displaytype: section
 
--   name: Visualize Network in Cosmograph
+-   name: Visualize Network in Cosmograph (This Can Take ~10 Minutes)
     displayname: Visualize Full Network in Cosmograph
     viewname: visualizefullnetwork
     displaytype: linkout
