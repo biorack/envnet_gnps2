@@ -9,7 +9,7 @@ params.inputfiles1_name = "20M"
 params.inputfiles2_name = "55M"
 
 params.normalize_ints = 1
-params.peak_value = 'peak_height'
+params.peak_value = 'peak_area'
 
 // Analysis Parameters
 params.mz_tolerance = 10

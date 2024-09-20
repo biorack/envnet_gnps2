@@ -1,5 +1,5 @@
 name: ENVnet_Workflow
-displayname: Compare Data Using ENVnet
+displayname: Compare Environments are Treatments Using ENVnet
 Views:
 
 -   name: Visualize Network
@@ -14,7 +14,7 @@ Views:
     parameters:
         baseurl: https://cosmograph.app/run/
         urlparam:
-            -   data:https://raw.githubusercontent.com/tharwood3/misc/main/edge_data.csv
+            -   data:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
             -   meta:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
             -   nodeColor:color-log2_foldchange_color
             -   linkSpring:0.1
