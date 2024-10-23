@@ -5,8 +5,8 @@ nextflow.enable.dsl=2
 params.inputfiles1 = "/mnt/c/permafrost/20M/"
 params.inputfiles2 = "/mnt/c/permafrost/55M/"
 
-params.inputfiles1_name = "20M"
-params.inputfiles2_name = "55M"
+params.inputfiles1_name = "19-kya"
+params.inputfiles2_name = "27-kya"
 
 params.normalize_ints = 1
 params.peak_value = 'peak_area'
@@ -14,7 +14,7 @@ params.peak_value = 'peak_area'
 // Analysis Parameters
 params.mz_tolerance = 10
 params.rt_min = 1
-params.rt_max = 7
+params.rt_max = 9
 params.pk_height_min = 1e4
 params.num_data_min = 5
 params.frag_mz_tol = 0.05
@@ -50,8 +50,8 @@ process collectNetworkHits {
     python $TOOL_FOLDER/analyze_metatlas_data_cli.py \
     --files_group1 $mzml_files1 \
     --files_group2 $mzml_files2 \
-    --files_group1_name $params.inputfiles1_name \
-    --files_group2_name $params.inputfiles2_name \
+    --files_group1_name "$params.inputfiles1_name" \
+    --files_group2_name "$params.inputfiles2_name" \
     --mz_tol $params.mz_tolerance \
     --rt_min $params.rt_min \
     --rt_max $params.rt_max \
@@ -105,8 +105,8 @@ process generateCompoundClassOutputs {
     python $SCRIPTS_FOLDER/make_class_and_cover_output.py \
     --cover_plots_dir set_cover_plots \
     --compound_plots_dir compound_class_plots \
-    --files_group1_name $params.inputfiles1_name \
-    --files_group2_name $params.inputfiles2_name \
+    --files_group1_name "$params.inputfiles1_name" \
+    --files_group2_name "$params.inputfiles2_name" \
     --ms1_file_path $all_ms1_data \
     --ms2_file_path $all_ms2_data \
     --output_file_path $output_file \
