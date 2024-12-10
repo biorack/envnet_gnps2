@@ -7,3 +7,6 @@
 *.nextflow/
 *nf_output/
 *work/
+
+# testing results
+test/results/*

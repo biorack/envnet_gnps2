@@ -2,11 +2,11 @@
 nextflow.enable.dsl=2
 
 // Parameters
-params.inputfiles1 = "/mnt/c/permafrost/20M/"
-params.inputfiles2 = "/mnt/c/permafrost/55M/"
+params.inputfiles1 = "/mnt/c/test_data/no_ms2/exctrl/"
+params.inputfiles2 = "/mnt/c/test_data/no_ms2/sample/"
 
-params.inputfiles1_name = "19-kya"
-params.inputfiles2_name = "27-kya"
+params.inputfiles1_name = "exctrl"
+params.inputfiles2_name = "sample"
 
 params.normalize_ints = 1
 params.peak_value = 'peak_area'
@@ -22,7 +22,7 @@ params.msms_score_min = 0.5
 params.msms_matches_min = 3
 
 // Cosmograph Parameters
-params.max_log_change = 1
+params.max_log_change = 0.5
 
 // Pathway and Set Cover Parameters
 params.max_pval = 0.05

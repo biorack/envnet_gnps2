@@ -78,7 +78,7 @@ def arg_parser(parser=None):
 
     parser.add_argument('-gf', '--graph_file', type=str, action='store', required=True)
     parser.add_argument('-of', '--output_file', type=str, action='store', required=True)
-    parser.add_argument('-ml', '--max_log_change', type=int, action='store', required=False, default=2)
+    parser.add_argument('-ml', '--max_log_change', type=float, action='store', required=False, default=2)
 
     return parser
 
