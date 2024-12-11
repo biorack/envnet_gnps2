@@ -21,6 +21,10 @@ params.frag_mz_tol = 0.05
 params.msms_score_min = 0.5
 params.msms_matches_min = 3
 
+// FTICR Parameters
+params.fticr = 0
+params.formula_match = 0
+
 // Cosmograph Parameters
 params.max_log_change = 0.5
 
@@ -52,6 +56,8 @@ process collectNetworkHits {
     --files_group2 $mzml_files2 \
     --files_group1_name "$params.inputfiles1_name" \
     --files_group2_name "$params.inputfiles2_name" \
+    --fticr $params.fticr \
+    --formula_match $params.formula_match \
     --mz_tol $params.mz_tolerance \
     --rt_min $params.rt_min \
     --rt_max $params.rt_max \
@@ -117,10 +123,16 @@ process generateCompoundClassOutputs {
 
 
 workflow {
-    mzml_files1 = Channel.fromPath("${params.inputfiles1}/*.mzML").collect()
-    mzml_files2 = Channel.fromPath("${params.inputfiles2}/*.mzML").collect()
+    files1 = Channel.fromPath("${params.inputfiles1}/*").collect()
+    
+    def files2
+    if (params.inputfiles2 && params.inputfiles2.trim()) {
+        files2 = Channel.fromPath("${params.inputfiles2}/*").collect()
+    } else {
+        files2 = Channel.of(["${baseDir}/tests/integration/data/dummy.txt"])
+    }
 
-    collectNetworkHits(mzml_files1, mzml_files2)
+    collectNetworkHits(files1, files2)
     
     formatCosmographOutput(collectNetworkHits.out.graph_file,
                            collectNetworkHits.out.output_file)
