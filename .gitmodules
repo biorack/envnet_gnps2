@@ -2,6 +2,3 @@
 	path = GNPS2_DeploymentTooling
 	url = https://github.com/Wang-Bioinformatics-Lab/GNPS2_DeploymentTooling.git
 
-[submodule "bin/envnet"]
-	path = bin/envnet
-	url = https://github.com/biorack/envnet
