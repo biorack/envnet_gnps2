@@ -86,8 +86,8 @@ process collectMS1Hits {
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted original \
-    --min-score $params.msms_score_min \
+    --spectrum-types deconvoluted \
+    --min-library-match-score $params.msms_score_min \
     --min-matches $params.msms_matches_min
 
     python -m envnet.annotation.workflows ms1 \
@@ -96,8 +96,8 @@ process collectMS1Hits {
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted original \
-    --min-score $params.msms_score_min \
+    --spectrum-types deconvoluted \
+    --min-library-match-score $params.msms_score_min \
     --min-matches $params.msms_matches_min
     """
 }
@@ -112,10 +112,8 @@ process collectMS2Hits {
     path mzml_files2
 
     output:
-    path "ms2_results/files1/ms2_original_annotations.parquet", emit: ms2_original_results1
     path "ms2_results/files1/ms2_deconvoluted_annotations.parquet", emit: ms2_deconvoluted_results1
 
-    path "ms2_results/files2/ms2_original_annotations.parquet", emit: ms2_original_results2
     path "ms2_results/files2/ms2_deconvoluted_annotations.parquet", emit: ms2_deconvoluted_results2
 
     """
@@ -127,8 +125,8 @@ process collectMS2Hits {
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted original \
-    --min-score $params.msms_score_min \
+    --spectrum-types deconvoluted \
+    --min-library-match-score $params.msms_score_min \
     --min-matches $params.msms_matches_min
 
     python -m envnet.annotation.workflows ms2 \
@@ -137,8 +135,8 @@ process collectMS2Hits {
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted original \
-    --min-score $params.msms_score_min \
+    --spectrum-types deconvoluted \
+    --min-library-match-score $params.msms_score_min \
     --min-matches $params.msms_matches_min
     """
 }
