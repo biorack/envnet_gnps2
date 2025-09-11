@@ -65,34 +65,36 @@ process unzipData {
     """
 }
 
+process generateMetadataFile {
+    input:
+    val mzml_files1
+    val mzml_files2
+
+    output:
+    path "file_metadata.csv", emit: file_metadata
+
+    """
+    python $SCRIPTS_FOLDER/make_metadata_file.py -f1 $mzml_files1 -f2 $mzml_files2 -sc1 $params.inputfiles1_name -sc2 $params.inputfiles2_name
+    """
+
+}
+
 process collectMS1Hits {
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
 
     input:
-    path mzml_files1
-    path mzml_files2
+    path file_metadata
 
     output:
-    path "ms1_results/files1/ms1_annotations.parquet", emit: ms1_results1
-    path "ms1_results/files2/ms1_annotations.parquet", emit: ms1_results2
+    path "ms1_results/ms1_annotations.parquet", emit: ms1_results
 
     """
     export PYTHONPATH=$baseDir/bin/envnet
 
     python -m envnet.annotation.workflows ms1 \
-    --output-dir ./ms1_results/files1 \
-    --file-list $mzml_files1 \
-    --envnet-graphml $REF_DIR/envnet_network.graphml \
-    --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
-    --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted \
-    --min-library-match-score $params.msms_score_min \
-    --min-matches $params.msms_matches_min
-
-    python -m envnet.annotation.workflows ms1 \
-    --output-dir ./ms1_results/files2 \
-    --file-list $mzml_files2 \
+    --output-dir ./ms1_results/ \
+    --csv-file $file_metadata \
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
@@ -102,36 +104,22 @@ process collectMS1Hits {
     """
 }
 
-
 process collectMS2Hits {
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
 
     input:
-    path mzml_files1
-    path mzml_files2
+    path file_metadata
 
     output:
-    path "ms2_results/files1/ms2_deconvoluted_annotations.parquet", emit: ms2_deconvoluted_results1
-
-    path "ms2_results/files2/ms2_deconvoluted_annotations.parquet", emit: ms2_deconvoluted_results2
+    path "ms2_results/ms2_deconvoluted_annotations.parquet", emit: ms2_deconvoluted_results
 
     """
     export PYTHONPATH=$baseDir/bin/envnet
 
     python -m envnet.annotation.workflows ms2 \
-    --output-dir ./ms2_results/files1 \
-    --file-list $mzml_files1 \
-    --envnet-graphml $REF_DIR/envnet_network.graphml \
-    --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
-    --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
-    --spectrum-types deconvoluted \
-    --min-library-match-score $params.msms_score_min \
-    --min-matches $params.msms_matches_min
-
-    python -m envnet.annotation.workflows ms2 \
-    --output-dir ./ms2_results/files2 \
-    --file-list $mzml_files2 \
+    --output-dir ./ms2_results/ \
+    --csv-file $file_metadata \
     --envnet-graphml $REF_DIR/envnet_network.graphml \
     --envnet-deconv-mgf $REF_DIR/envnet_deconvoluted_spectra.mgf \
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
@@ -198,8 +186,11 @@ workflow {
     files1 = Channel.fromPath("${params.inputfiles1}/*").collect()
     files2 = Channel.fromPath("${params.inputfiles2}/*").collect()
 
-    collectMS1Hits(files1, files2)
-    collectMS2Hits(files1, files2)
+    // generate metadata file
+    file_metadata = generateMetadataFile(files1, files2).collect()
+
+    collectMS1Hits(file_metadata)
+    collectMS2Hits(file_metadata)
     
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)
