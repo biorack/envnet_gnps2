@@ -129,6 +129,32 @@ process collectMS2Hits {
     """
 }
 
+process runAnalysis {
+    publishDir "$params.publishdir/nf_output/results", mode: 'copy'
+    conda "$CONDA_ENVS/environment_analysis.yml"
+
+    input:
+    path file_metadata
+    path ms1_results
+    path ms2_deconvoluted_results
+
+    """
+    export PYTHONPATH=$baseDir/bin/envnet
+
+    python -m envnet.analysis.workflows stats \
+    --output-dir ./analysis_results/ \
+    --ms1-file $ms1_results \
+    --ms2-deconv-file $ms2_deconvoluted_results \
+    --file-metadata $file_metadata \
+    --control-group $params.inputfiles1_name \
+    --treatment-group $params.inputfiles2_name \
+    --envnet-data $REF_DIR/envnet_node_data.csv \
+    --peak-value $params.peak_value \
+    --max-pvalue $params.max_pval
+    """
+}
+
+//    --normalize-data $params.normalize_ints \
 
 // process formatCosmographOutput {
 //     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
@@ -189,8 +215,10 @@ workflow {
     // generate metadata file
     file_metadata = generateMetadataFile(files1, files2).collect()
 
-    collectMS1Hits(file_metadata)
-    collectMS2Hits(file_metadata)
+    ms1_results = collectMS1Hits(file_metadata).collect()
+    ms2_deconvoluted_results = collectMS2Hits(file_metadata).collect()
+
+    runAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results)
     
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)
