@@ -19,7 +19,7 @@ def create_metadata_file(files1, files2, sample_cat1, sample_cat2):
 
     metadata_df = pd.concat([df1, df2])
     metadata_df['original_file_type'] = 'mzml'
-    metadata_df['lcmsrun_observed'] = metadata_df['mzml'].apply(lambda x: Path(x).stem)
+    metadata_df['lcmsrun_observed'] = metadata_df['mzml'].apply(lambda x: Path(x).with_suffix(''))
 
     metadata_df['parquet'] = metadata_df['mzml'].apply(lambda f: Path(f).with_suffix(".parquet"))
     metadata_df['h5'] = metadata_df['mzml'].apply(lambda f: Path(f).with_suffix(".h5"))

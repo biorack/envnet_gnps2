@@ -20,6 +20,7 @@ params.num_data_min = 5
 params.frag_mz_tol = 0.05
 params.msms_score_min = 0.5
 params.msms_matches_min = 3
+params.require_ms2_support = 1
 
 // FTICR Parameters
 params.fticr = 0
@@ -141,16 +142,34 @@ process runAnalysis {
     """
     export PYTHONPATH=$baseDir/bin/envnet
 
-    python -m envnet.analysis.workflows stats \
-    --output-dir ./analysis_results/ \
-    --ms1-file $ms1_results \
-    --ms2-deconv-file $ms2_deconvoluted_results \
-    --file-metadata $file_metadata \
-    --control-group $params.inputfiles1_name \
-    --treatment-group $params.inputfiles2_name \
-    --envnet-data $REF_DIR/envnet_node_data.csv \
-    --peak-value $params.peak_value \
-    --max-pvalue $params.max_pval
+    if [ "$params.require_ms2_support" = 1 ]; then
+
+        python -m envnet.analysis.workflows stats \
+        --output-dir ./analysis_results/ \
+        --ms1-file $ms1_results \
+        --ms2-deconv-file $ms2_deconvoluted_results \
+        --file-metadata $file_metadata \
+        --require-ms2-support \
+        --control-group $params.inputfiles1_name \
+        --treatment-group $params.inputfiles2_name \
+        --envnet-data $REF_DIR/envnet_node_data.csv \
+        --peak-value $params.peak_value \
+        --max-pvalue $params.max_pval
+
+    else
+
+        python -m envnet.analysis.workflows stats \
+        --output-dir ./analysis_results/ \
+        --ms1-file $ms1_results \
+        --ms2-deconv-file $ms2_deconvoluted_results \
+        --file-metadata $file_metadata \
+        --control-group $params.inputfiles1_name \
+        --treatment-group $params.inputfiles2_name \
+        --envnet-data $REF_DIR/envnet_node_data.csv \
+        --peak-value $params.peak_value \
+        --max-pvalue $params.max_pval
+
+    fi
     """
 }
 
@@ -219,7 +238,7 @@ workflow {
     ms2_deconvoluted_results = collectMS2Hits(file_metadata).collect()
 
     runAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results)
-    
+
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)
 
