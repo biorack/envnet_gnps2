@@ -9,15 +9,15 @@ def create_metadata_file(files1, files2, sample_cat1, sample_cat2):
     df2 = pd.DataFrame(columns=metadata_cols)
 
     # clean up file paths from nextflow
-    clean_files1 = [file.replace('[', '').replace(']', '') for file in files1]
-    clean_files2 = [file.replace('[', '').replace(']', '') for file in files2]
+    clean_files1 = [file.replace('[', '').replace(']', '').replace(',', '') for file in files1]
+    clean_files2 = [file.replace('[', '').replace(']', '').replace(',', '') for file in files2]
     df1['mzml'] = clean_files1
     df2['mzml'] = clean_files2
     
     df1['sample_category'] = sample_cat1
     df2['sample_category'] = sample_cat2
 
-    metadata_df = pd.concat([df1, df2])
+    metadata_df = pd.concat([df1, df2]).reset_index(drop=True)
     metadata_df['original_file_type'] = 'mzml'
     metadata_df['lcmsrun_observed'] = metadata_df['mzml'].apply(lambda x: Path(x).with_suffix(''))
 
