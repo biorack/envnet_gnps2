@@ -130,7 +130,7 @@ process collectMS2Hits {
     """
 }
 
-process runAnalysis {
+process runStatsAnalysis {
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
 
@@ -138,6 +138,9 @@ process runAnalysis {
     path file_metadata
     path ms1_results
     path ms2_deconvoluted_results
+
+    output:
+    path "analysis_results/statistical_results.csv", emit: stats_results
 
     """
     export PYTHONPATH=$baseDir/bin/envnet
@@ -173,7 +176,27 @@ process runAnalysis {
     """
 }
 
-//    --normalize-data $params.normalize_ints \
+process runEnrichAnalysis {
+    publishDir "$params.publishdir/nf_output/results", mode: 'copy'
+    conda "$CONDA_ENVS/environment_analysis.yml"
+
+    input:
+    path stats_results
+
+    output:
+    path "analysis_results/compound_class_enrichment.pdf"
+
+    """
+    export PYTHONPATH=$baseDir/bin/envnet
+
+    python -m envnet.analysis.workflows enrichment \
+    --output-dir ./analysis_results/ \
+    --stats-results $stats_results \
+    --control-group $params.inputfiles1_name \
+    --treatment-group $params.inputfiles2_name \
+    --envnet-data $REF_DIR/envnet_node_data.csv \
+    """
+}
 
 // process formatCosmographOutput {
 //     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
@@ -196,34 +219,6 @@ process runAnalysis {
 
 // }
 
-
-// process generateCompoundClassOutputs {
-//     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
-//     conda "$TOOL_FOLDER/environment_analysis.yml"
-
-//     input:
-//     path all_ms1_data
-//     path all_ms2_data
-//     path output_file
-
-//     output:
-//     path "set_cover_plots/*"
-//     path "compound_class_plots/*"
-
-//     """
-//     python $SCRIPTS_FOLDER/make_class_and_cover_output.py \
-//     --cover_plots_dir set_cover_plots \
-//     --compound_plots_dir compound_class_plots \
-//     --files_group1_name "$params.inputfiles1_name" \
-//     --files_group2_name "$params.inputfiles2_name" \
-//     --ms1_file_path $all_ms1_data \
-//     --ms2_file_path $all_ms2_data \
-//     --output_file_path $output_file \
-//     --max_p_val $params.max_pval \
-//     """
-
-// }
-
 workflow {
     // unzip data files if compressed
     unzipData()
@@ -237,12 +232,10 @@ workflow {
     ms1_results = collectMS1Hits(file_metadata).collect()
     ms2_deconvoluted_results = collectMS2Hits(file_metadata).collect()
 
-    runAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results)
+    stats_results = runStatsAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results).collect()
+    runEnrichAnalysis(stats_results)
 
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)
 
-    // generateCompoundClassOutputs(collectNetworkHits.out.all_ms1_data, 
-    //                              collectNetworkHits.out.all_ms2_data, 
-    //                              collectNetworkHits.out.output_file)
 }
