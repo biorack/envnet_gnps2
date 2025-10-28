@@ -193,6 +193,9 @@ process runEnrichAnalysis {
 
     output:
     path "analysis_results/compound_class_enrichment.pdf"
+    path "analysis_results/NPC#class_enrichment.csv"
+    path "analysis_results/NPC#pathway_enrichment.csv"
+    path "analysis_results/NPC#superclass_enrichment.csv"
 
     """
     export PYTHONPATH=$baseDir/bin/envnet
