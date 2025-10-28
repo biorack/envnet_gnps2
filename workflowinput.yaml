@@ -91,25 +91,11 @@ parameterlist:
       formvalue: "7"
       optional: true
 
-    - displayname: Minimum Peak Intensity (Height)
-      paramtype: text
-      nf_paramname: pk_height_min
-      formplaceholder: Enter the pk_height_min. Used to filter features from data files lower than min
-      formvalue: "10000"
-      optional: true
-
     - displayname: Minimum Number of Data Points
       paramtype: text
       nf_paramname: num_data_min
       formplaceholder: Enter the num_data_min. Used to filter features from data files lower than min. A data point is defined as the detection of a particular m/z in one scan. 
       formvalue: "10"
-      optional: true
-
-    - displayname: Fragment m/z Tolerance (Dalton)
-      paramtype: text
-      nf_paramname: frag_mz_tol
-      formplaceholder: Enter the frag_mz_tol. Used for MS2 fragment m/z comparisons
-      formvalue: "0.05"
       optional: true
 
     - displayname: Minimum MS/MS Score

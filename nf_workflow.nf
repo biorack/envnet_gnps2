@@ -2,11 +2,11 @@
 nextflow.enable.dsl=2
 
 // Parameters
-params.inputfiles1 = "/mnt/c/test_data/files1/"
-params.inputfiles2 = "/mnt/c/test_data/files2/"
+params.inputfiles1 = "/mnt/c/raw_data/pfrost_20m"
+params.inputfiles2 = "/mnt/c/raw_data/pfrost_55m"
 
-params.inputfiles1_name = "exctrl"
-params.inputfiles2_name = "sample"
+params.inputfiles1_name = "20M"
+params.inputfiles2_name = "55M"
 
 params.normalize_ints = 1
 params.peak_value = 'peak_area'
@@ -15,12 +15,10 @@ params.peak_value = 'peak_area'
 params.mz_tolerance = 10
 params.rt_min = 1
 params.rt_max = 9
-params.pk_height_min = 1e4
 params.num_data_min = 5
-params.frag_mz_tol = 0.05
 params.msms_score_min = 0.5
 params.msms_matches_min = 3
-params.require_ms2_support = 1
+params.require_ms2_support = 0
 
 // FTICR Parameters
 params.fticr = 0
@@ -67,6 +65,8 @@ process unzipData {
 }
 
 process generateMetadataFile {
+    conda "$CONDA_ENVS/environment_analysis.yml"
+    
     input:
     val mzml_files1
     val mzml_files2
@@ -101,7 +101,11 @@ process collectMS1Hits {
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
     --spectrum-types deconvoluted \
     --min-library-match-score $params.msms_score_min \
-    --min-matches $params.msms_matches_min
+    --min-matches $params.msms_matches_min \
+    --ppm-tolerance $params.mz_tolerance \
+    --rt-min $params.rt_min \
+    --rt-max $params.rt_max \
+    --min-ms1-datapoints $params.num_data_min
     """
 }
 
@@ -126,7 +130,11 @@ process collectMS2Hits {
     --envnet-original-mgf $REF_DIR/envnet_original_spectra.mgf \
     --spectrum-types deconvoluted \
     --min-library-match-score $params.msms_score_min \
-    --min-matches $params.msms_matches_min
+    --min-matches $params.msms_matches_min \
+    --ppm-tolerance $params.mz_tolerance \
+    --rt-min $params.rt_min \
+    --rt-max $params.rt_max \
+    --min-ms1-datapoints $params.num_data_min
     """
 }
 
