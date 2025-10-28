@@ -206,6 +206,25 @@ process runEnrichAnalysis {
     """
 }
 
+process convertParquetFilesToCSV {
+    publishDir "$params.publishdir/nf_output/results", mode: 'copy'
+    conda "$CONDA_ENVS/environment_analysis.yml"
+    
+    input:
+    val ms1_parquet_file
+    val ms2_parquet_file
+
+    output:
+    path "ms1_results/ms1_annotations.csv"
+    path "ms2_results/ms2_deconvoluted_annotations.csv"
+
+    """
+    python $SCRIPTS_FOLDER/convert_parquet_to_csv.py -f $ms1_parquet_file
+    python $SCRIPTS_FOLDER/convert_parquet_to_csv.py -f $ms2_parquet_file
+    """
+
+}
+
 // process formatCosmographOutput {
 //     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
 //     conda "$TOOL_FOLDER/environment_analysis.yml"
@@ -242,6 +261,8 @@ workflow {
 
     stats_results = runStatsAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results).collect()
     runEnrichAnalysis(stats_results)
+
+    convertParquetFilesToCSV(ms1_results, ms2_deconvoluted_results)
 
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)
