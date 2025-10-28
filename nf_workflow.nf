@@ -209,6 +209,22 @@ process runEnrichAnalysis {
     """
 }
 
+process annotateGraphmlFile {
+    publishDir "$params.publishdir/nf_output/results", mode: 'copy'
+    conda "$CONDA_ENVS/environment_analysis.yml"
+    
+    input:
+    path stats_results
+
+    output:
+    path "envnet_network_annotated.graphml"
+
+    """
+    python $SCRIPTS_FOLDER/make_annotated_graphml.py -fg $REF_DIR/envnet_network.graphml -fs $stats_results
+    """
+
+}
+
 process convertParquetFilesToCSV {
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
@@ -227,6 +243,7 @@ process convertParquetFilesToCSV {
     """
 
 }
+
 
 // process formatCosmographOutput {
 //     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
@@ -263,7 +280,9 @@ workflow {
     ms2_deconvoluted_results = collectMS2Hits(file_metadata).collect()
 
     stats_results = runStatsAnalysis(file_metadata, ms1_results, ms2_deconvoluted_results).collect()
+    
     runEnrichAnalysis(stats_results)
+    annotateGraphmlFile(stats_results)
 
     convertParquetFilesToCSV(ms1_results, ms2_deconvoluted_results)
 
