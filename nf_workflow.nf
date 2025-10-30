@@ -25,7 +25,7 @@ params.fticr = 0
 params.formula_match = 0
 
 // Cosmograph Parameters
-params.max_log_change = 0.5
+// params.max_log_change = 0.5
 
 // Pathway and Set Cover Parameters
 params.max_pval = 0.05
@@ -161,6 +161,7 @@ process runStatsAnalysis {
         --ms2-deconv-file $ms2_deconvoluted_results \
         --file-metadata $file_metadata \
         --require-ms2-support \
+        --normalize-data $params.normalize_ints \
         --control-group $params.inputfiles1_name \
         --treatment-group $params.inputfiles2_name \
         --envnet-data $REF_DIR/envnet_node_data.csv \
@@ -174,6 +175,7 @@ process runStatsAnalysis {
         --ms1-file $ms1_results \
         --ms2-deconv-file $ms2_deconvoluted_results \
         --file-metadata $file_metadata \
+        --normalize-data $params.normalize_ints \
         --control-group $params.inputfiles1_name \
         --treatment-group $params.inputfiles2_name \
         --envnet-data $REF_DIR/envnet_node_data.csv \

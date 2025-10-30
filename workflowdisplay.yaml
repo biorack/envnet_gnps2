@@ -1,23 +1,24 @@
 name: ENVnet_Workflow
-displayname: Compare Environments are Treatments Using ENVnet
+displayname: Compare Environments and Treatments Using ENVnet
 Views:
 
--   name: Visualize Network
-    displayname: Visualize Network
-    viewname: VisualizeNetwork
-    displaytype: section
+# Removed for now, can reimplement later
+# -   name: Visualize Network
+#     displayname: Visualize Network
+#     viewname: VisualizeNetwork
+#     displaytype: section
 
--   name: Visualize Network in Cosmograph
-    displayname: Visualize Full Network in Cosmograph (This Can Take ~10 Minutes)
-    viewname: visualizefullnetwork
-    displaytype: linkout
-    parameters:
-        baseurl: https://cosmograph.app/run/
-        urlparam:
-            -   data:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
-            -   meta:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
-            -   nodeColor:color-log2_foldchange_color
-            -   linkSpring:0.1
+# -   name: Visualize Network in Cosmograph
+#     displayname: Visualize Full Network in Cosmograph (This Can Take ~10 Minutes)
+#     viewname: visualizefullnetwork
+#     displaytype: linkout
+#     parameters:
+#         baseurl: https://cosmograph.app/run/
+#         urlparam:
+#             -   data:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_edges.csv
+#             -   meta:https://cors.gnps2.org/resultfile?task=[task]&file=nf_output/results/cosmograph_metadata.csv
+#             -   nodeColor:color-log2_foldchange_color
+#             -   linkSpring:0.1
 
 -   name: Download Output Files
     displayname: Download Output Files
@@ -29,40 +30,41 @@ Views:
     viewname: OutputTable
     displaytype: download
     parameters:
-        filename: nf_output/results/output_group1-vs-group2.csv
+        filename: nf_output/results/analysis_results/statistical_results.csv
 
 -   name: Download Annotated ENVnet GraphML
     displayname: Download Network GraphML
     viewname: graphml
     displaytype: download
     parameters:
-        filename: nf_output/results/AnnotatedENVnet.graphml
+        filename: nf_output/results/envnet_network_annotated.graphml
 
 -   name: Download Compound Class Plots
     displayname: Download Compound Class Plots
     viewname: CompoundClass
     displaytype: download
     parameters:
-        filename: nf_output/results/compound_class_plots/class_results.pdf
+        filename: nf_output/results/analysis_results/compound_class_enrichment.pdf
 
--   name: Download Set Cover Plots
-    displayname: Download Set Cover Plots
-    viewname: SetCover
-    displaytype: download
-    parameters:
-        filename: nf_output/results/set_cover_plots/set_cover_results.pdf
+# Removed for now, can be reimplemented later
+# -   name: Download Set Cover Plots
+#     displayname: Download Set Cover Plots
+#     viewname: SetCover
+#     displaytype: download
+#     parameters:
+#         filename: nf_output/results/set_cover_plots/set_cover_results.pdf
 
--   name: Download MS1 Data
+-   name: Download MS1 Annotations
     displayname: Download MS1 Data
     viewname: MS1Data
     displaytype: download
     parameters:
-        filename: nf_output/results/all_ms1_data.csv
+        filename: nf_output/results/ms1_results/ms1_annotations.csv
 
--   name: Download MS2 Data
+-   name: Download MS2 Annotations
     displayname: Download MS2 Data
     viewname: MS2Data
     displaytype: download
     parameters:
-        filename: nf_output/results/all_ms2_data.csv
+        filename: nf_output/results/ms2_results/ms2_deconvoluted_annotations.csv
 

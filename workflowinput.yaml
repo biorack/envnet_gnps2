@@ -74,7 +74,7 @@ parameterlist:
       paramtype: text
       nf_paramname: mz_tolerance
       formplaceholder: Enter the mz_tolerance. Used for MS1 and precursor m/z comparisons
-      formvalue: "5"
+      formvalue: "10"
       optional: true
 
     - displayname: Minimum Retention Time (Minutes)
@@ -88,14 +88,14 @@ parameterlist:
       paramtype: text
       nf_paramname: rt_max
       formplaceholder: Enter the rt_max. Used to filter features from data files outside of range
-      formvalue: "7"
+      formvalue: "9"
       optional: true
 
     - displayname: Minimum Number of Data Points
       paramtype: text
       nf_paramname: num_data_min
       formplaceholder: Enter the num_data_min. Used to filter features from data files lower than min. A data point is defined as the detection of a particular m/z in one scan. 
-      formvalue: "10"
+      formvalue: "5"
       optional: true
 
     - displayname: Minimum MS/MS Score
@@ -112,22 +112,23 @@ parameterlist:
       formvalue: "3"
       optional: true
 
-    - displayname: Cosmograph Visualization Parameters
-      paramtype: section
+    # Removed for now, can be added back later
+    # - displayname: Cosmograph Visualization Parameters
+    #   paramtype: section
 
-    - displayname: Log2 Fold Change Color Scale Max
-      paramtype: text
-      nf_paramname: max_log_change
-      formplaceholder: Enter the max_log_change. Used for visualization in cosmograph, doesn't override actual values.
-      formvalue: "1"
-      optional: true
+    # - displayname: Log2 Fold Change Color Scale Max
+    #   paramtype: text
+    #   nf_paramname: max_log_change
+    #   formplaceholder: Enter the max_log_change. Used for visualization in cosmograph, doesn't override actual values.
+    #   formvalue: "1"
+    #   optional: true
 
-    - displayname: Compound Class & Set Cover Analysis Parameters
-      paramtype: section
+    # - displayname: Compound Class & Set Cover Analysis Parameters
+    #   paramtype: section
 
-    - displayname: Max P value
-      paramtype: text
-      nf_paramname: max_pval
-      formplaceholder: Enter the max_pval. Used for the compound class comparisons
-      formvalue: "0.05"
-      optional: true
+    # - displayname: Max P value
+    #   paramtype: text
+    #   nf_paramname: max_pval
+    #   formplaceholder: Enter the max_pval. Used for the compound class comparisons
+    #   formvalue: "0.05"
+    #   optional: true
