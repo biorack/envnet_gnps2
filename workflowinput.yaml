@@ -1,7 +1,7 @@
 workflowname: ENVnet_Workflow
 workflowdescription: ENVnet_Workflow
 workflowlongdescription: Compare Data Using ENVnet
-workflowversion: "0.1"
+workflowversion: "0.2"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false
@@ -47,7 +47,7 @@ parameterlist:
       formvalue: ""
       optional: false
 
-    - displayname: Normalize Intensities
+    - displayname: Normalize Intensities (By Total Intensity)
       paramtype: select
       nf_paramname: normalize_ints
       formvalue: "0"
