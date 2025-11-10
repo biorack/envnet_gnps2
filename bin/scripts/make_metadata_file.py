@@ -2,6 +2,20 @@ from pathlib import Path
 import pandas as pd
 import argparse
 
+
+def verify_files(file_list):
+    files_verfied1 = []
+    for file in file_list:
+        if Path(file).exists():
+            files_verfied1.append(file)
+        elif Path(file + '.mzML').exists():
+            files_verfied1.append(file.replace(".mzml", ".mzML"))
+        else:
+            raise FileNotFoundError(f"File {file} not found.")
+        
+    return files_verfied1
+
+
 def create_metadata_file(files1, files2, sample_cat1, sample_cat2):
     """Generates and saves a metadata file from nextflow parameters"""
     metadata_cols = ['original_file_type', 'sample_category', 'lcmsrun_observed', 'parquet', 'h5', 'mzml']
@@ -11,8 +25,13 @@ def create_metadata_file(files1, files2, sample_cat1, sample_cat2):
     # clean up file paths from nextflow
     clean_files1 = [file.replace('[', '').replace(']', '').replace(',', '') for file in files1]
     clean_files2 = [file.replace('[', '').replace(']', '').replace(',', '') for file in files2]
-    df1['mzml'] = clean_files1
-    df2['mzml'] = clean_files2
+
+    # check and fix each file extension that may have been changed from parsing
+    clean_files_verfied1 = verify_files(clean_files1)
+    clean_files_verfied2 = verify_files(clean_files2)
+
+    df1['mzml'] = clean_files_verfied1
+    df2['mzml'] = clean_files_verfied2
     
     df1['sample_category'] = sample_cat1
     df2['sample_category'] = sample_cat2
