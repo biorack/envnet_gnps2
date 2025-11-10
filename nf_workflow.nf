@@ -153,36 +153,27 @@ process runStatsAnalysis {
     """
     export PYTHONPATH=$baseDir/bin/envnet
 
-    if [ "$params.require_ms2_support" = 1 ]; then
+    CMD=( python -m envnet.analysis.workflows stats )
 
-        python -m envnet.analysis.workflows stats \
-        --output-dir ./analysis_results/ \
-        --ms1-file $ms1_results \
-        --ms2-deconv-file $ms2_deconvoluted_results \
-        --file-metadata $file_metadata \
-        --require-ms2-support \
-        --normalize-data $params.normalize_ints \
-        --control-group $params.inputfiles1_name \
-        --treatment-group $params.inputfiles2_name \
-        --envnet-data $REF_DIR/envnet_node_data.csv \
-        --peak-value $params.peak_value \
-        --max-pvalue $params.max_pval
+    CMD+=( --output-dir ./analysis_results/ )
+    CMD+=( --ms1-file "$ms1_results" )
+    CMD+=( --ms2-deconv-file "$ms2_deconvoluted_results" )
+    CMD+=( --file-metadata "$file_metadata" )
+    CMD+=( --control-group "$params.inputfiles1_name" )
+    CMD+=( --treatment-group "$params.inputfiles2_name" )
+    CMD+=( --envnet-data "$REF_DIR/envnet_node_data.csv" )
+    CMD+=( --peak-value "$params.peak_value" )
+    CMD+=( --max-pvalue "$params.max_pval" )
 
-    else
-
-        python -m envnet.analysis.workflows stats \
-        --output-dir ./analysis_results/ \
-        --ms1-file $ms1_results \
-        --ms2-deconv-file $ms2_deconvoluted_results \
-        --file-metadata $file_metadata \
-        --normalize-data $params.normalize_ints \
-        --control-group $params.inputfiles1_name \
-        --treatment-group $params.inputfiles2_name \
-        --envnet-data $REF_DIR/envnet_node_data.csv \
-        --peak-value $params.peak_value \
-        --max-pvalue $params.max_pval
-
+    if [ "${params.require_ms2_support}" == "1" ]; then
+        CMD+=( --require-ms2-support )
     fi
+
+    if [ "${params.normalize_ints}" == "1" ]; then
+        CMD+=( --normalize-data )
+    fi
+
+    "\${CMD[@]}"
     """
 }
 
