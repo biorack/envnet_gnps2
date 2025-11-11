@@ -68,14 +68,18 @@ process generateMetadataFile {
     conda "$CONDA_ENVS/environment_analysis.yml"
     
     input:
-    val mzml_files1
-    val mzml_files2
+    path mzml_files1
+    path mzml_files2
 
     output:
     path "file_metadata.csv", emit: file_metadata
 
+    script:
+    def mzml_files1_abs = mzml_files1.collect { it.toRealPath() }.join(' ')
+    def mzml_files2_abs = mzml_files2.collect { it.toRealPath() }.join(' ')
+
     """
-    python $SCRIPTS_FOLDER/make_metadata_file.py -f1 $mzml_files1 -f2 $mzml_files2 -sc1 $params.inputfiles1_name -sc2 $params.inputfiles2_name
+    python $SCRIPTS_FOLDER/make_metadata_file.py -f1 $mzml_files1_abs -f2 $mzml_files2_abs -sc1 $params.inputfiles1_name -sc2 $params.inputfiles2_name
     """
 
 }
