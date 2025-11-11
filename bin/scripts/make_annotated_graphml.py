@@ -13,7 +13,7 @@ def annotate_graphml(input_graphml_file, stats_output_file):
     stats_df = pd.read_csv(_clean_input_file(stats_output_file), index_col=0, dtype={'original_index': str})
 
     envnet_all_nodes = pd.DataFrame(G.nodes(), columns=['original_index'])
-    stats_df_merged = pd.merge(envnet_all_nodes, stats_df, on='original_index', how='left')
+    stats_df_merged = pd.merge(envnet_all_nodes, stats_df, on='original_index', how='left').set_index('original_index')
 
     for stats_col in stats_df_merged.columns:
         attr_dict = stats_df_merged[stats_col].to_dict()
