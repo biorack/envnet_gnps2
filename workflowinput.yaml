@@ -1,7 +1,7 @@
 workflowname: ENVnet_Workflow
 workflowdescription: ENVnet_Workflow
 workflowlongdescription: Compare Data Using ENVnet
-workflowversion: "0.2"
+workflowversion: "1.0"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false

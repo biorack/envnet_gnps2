@@ -169,12 +169,13 @@ process runStatsAnalysis {
     CMD+=( --peak-value "$params.peak_value" )
     CMD+=( --max-pvalue "$params.max_pval" )
 
-    if [ "${params.require_ms2_support}" == "1" ]; then
+    if [ ${params.require_ms2_support} == 1 ]; then
         CMD+=( --require-ms2-support )
     fi
 
-    if [ "${params.normalize_ints}" == "1" ]; then
+    if [ ${params.normalize_ints} == 1 ]; then
         CMD+=( --normalize-data )
+        echo "Normalizing intensity data..."
     fi
 
     "\${CMD[@]}"
