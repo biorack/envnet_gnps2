@@ -8,7 +8,7 @@ params.inputfiles2 = "/mnt/c/raw_data/pfrost_55m"
 params.inputfiles1_name = "20M"
 params.inputfiles2_name = "55M"
 
-params.normalize_ints = 1
+params.normalize_ints = "1"
 params.peak_value = 'peak_area'
 
 // Analysis Parameters
@@ -143,6 +143,8 @@ process collectMS2Hits {
 }
 
 process runStatsAnalysis {
+    echo true
+
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
 
@@ -169,11 +171,11 @@ process runStatsAnalysis {
     CMD+=( --peak-value "$params.peak_value" )
     CMD+=( --max-pvalue "$params.max_pval" )
 
-    if [ ${params.require_ms2_support} == 1 ]; then
+    if [ ${params.require_ms2_support} -eq 1 ]; then
         CMD+=( --require-ms2-support )
     fi
 
-    if [ ${params.normalize_ints} == 1 ]; then
+    if [ ${params.normalize_ints} -eq 1 ]; then
         CMD+=( --normalize-data )
         echo "Normalizing intensity data..."
     fi
