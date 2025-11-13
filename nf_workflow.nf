@@ -143,8 +143,6 @@ process collectMS2Hits {
 }
 
 process runStatsAnalysis {
-    echo true
-
     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
     conda "$CONDA_ENVS/environment_analysis.yml"
 
