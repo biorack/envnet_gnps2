@@ -1,6 +1,6 @@
 workflowname: ENVnet_Workflow
 workflowdescription: ENVnet_Workflow
-workflowlongdescription: Compare Dissolved Organic Matter (DOM) Samples From Two Groups Using ENVnet. Note: This workflow requires at least two files in each group to run correctly.
+workflowlongdescription: Compare Dissolved Organic Matter (DOM) Samples From Two Groups Using ENVnet
 workflowversion: "1.1"
 workflowfile: nf_workflow.nf
 workflowautohide: false
