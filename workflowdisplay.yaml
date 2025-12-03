@@ -30,14 +30,14 @@ Views:
     viewname: OutputTable
     displaytype: download
     parameters:
-        filename: nf_output/results/merged_output_table.csv
+        filename: nf_output/results/merged_output.csv
 
 -   name: Download ENVnet Statistical Analysis
     displayname: Download Stats Table
     viewname: OutputTable
     displaytype: download
     parameters:
-        filename: nf_output/analysis_results/statistical_results.csv
+        filename: nf_output/results/analysis_results/statistical_results.csv
 
 -   name: Download Annotated ENVnet GraphML
     displayname: Download Network GraphML
