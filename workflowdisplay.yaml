@@ -25,12 +25,19 @@ Views:
     viewname: OutputFiles
     displaytype: section
 
--   name: Download ENVnet Analysis Output Table
+-   name: Download ENVnet Analysis Merged Output Table
     displayname: Download Output Table
     viewname: OutputTable
     displaytype: download
     parameters:
-        filename: nf_output/results/analysis_results/statistical_results.csv
+        filename: nf_output/results/merged_output_table.csv
+
+-   name: Download ENVnet Statistical Analysis
+    displayname: Download Output Table
+    viewname: OutputTable
+    displaytype: download
+    parameters:
+        filename: nf_output/analysis_results/statistical_results.csv
 
 -   name: Download Annotated ENVnet GraphML
     displayname: Download Network GraphML

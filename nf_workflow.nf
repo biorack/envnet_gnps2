@@ -190,10 +190,10 @@ process runEnrichAnalysis {
     path stats_results
 
     output:
-    path "analysis_results/compound_class_enrichment.pdf"
-    path "analysis_results/NPC#class_enrichment.csv"
-    path "analysis_results/NPC#pathway_enrichment.csv"
-    path "analysis_results/NPC#superclass_enrichment.csv"
+    path "analysis_results/compound_class_enrichment.pdf", optional: true
+    path "analysis_results/NPC#class_enrichment.csv", optional: true
+    path "analysis_results/NPC#pathway_enrichment.csv", optional: true
+    path "analysis_results/NPC#superclass_enrichment.csv", optional: true
 
     """
     export PYTHONPATH=$baseDir/bin/envnet
@@ -242,6 +242,28 @@ process convertParquetFilesToCSV {
 
 }
 
+process mergeOutputFiles {
+    publishDir "$params.publishdir/nf_output/results", mode: 'copy'
+    conda "$CONDA_ENVS/environment_analysis.yml"
+
+    input:
+    path node_data
+    path stats_results
+    path ms2_deconvoluted_results
+
+    output:
+    path "merged_output.csv"
+
+    """
+    python $SCRIPTS_FOLDER/make_combined_csv.py \
+    --input_node_data $node_data \
+    --input_stats $stats_results \
+    --input_ms2 $ms2_deconvoluted_results \
+    --output_csv merged_output.csv
+    """
+
+}
+
 
 // process formatCosmographOutput {
 //     publishDir "$params.publishdir/nf_output/results", mode: 'copy'
@@ -283,6 +305,7 @@ workflow {
     annotateGraphmlFile(stats_results)
 
     convertParquetFilesToCSV(ms1_results, ms2_deconvoluted_results)
+    mergeOutputFiles("$REF_DIR/envnet_node_data.csv", stats_results, ms2_deconvoluted_results)
 
     // formatCosmographOutput(collectNetworkHits.out.graph_file,
     //                        collectNetworkHits.out.output_file)

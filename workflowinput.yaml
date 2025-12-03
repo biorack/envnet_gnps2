@@ -1,7 +1,7 @@
 workflowname: ENVnet_Workflow
 workflowdescription: ENVnet_Workflow
-workflowlongdescription: Compare Data Using ENVnet
-workflowversion: "1.0"
+workflowlongdescription: Compare Dissolved Organic Matter (DOM) Samples From Two Groups Using ENVnet. Note: This workflow requires at least two files in each group to run correctly.
+workflowversion: "1.1"
 workflowfile: nf_workflow.nf
 workflowautohide: false
 adminonly: false
@@ -50,6 +50,16 @@ parameterlist:
     - displayname: Normalize Intensities (By Total Intensity)
       paramtype: select
       nf_paramname: normalize_ints
+      formvalue: "0"
+      options:
+        - value: "0"
+          display: "No"
+        - value: "1"
+          display: "Yes"
+
+    - displayname: Require MS/MS Support For Statistical Analysis
+      paramtype: select
+      nf_paramname: require_ms2_support
       formvalue: "0"
       options:
         - value: "0"
