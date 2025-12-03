@@ -26,14 +26,14 @@ Views:
     displaytype: section
 
 -   name: Download ENVnet Analysis Merged Output Table
-    displayname: Download Output Table
+    displayname: Download Merged Output Table
     viewname: OutputTable
     displaytype: download
     parameters:
         filename: nf_output/results/merged_output_table.csv
 
 -   name: Download ENVnet Statistical Analysis
-    displayname: Download Output Table
+    displayname: Download Stats Table
     viewname: OutputTable
     displaytype: download
     parameters:
